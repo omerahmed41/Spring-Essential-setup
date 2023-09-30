@@ -3,14 +3,10 @@
 echo "Running pre-commit checks..."
 
 # Run your checks
-./mvnw validate
-./mvnw clean test
-./mvnw jacoco:report
-./mvnw clean verify
-# Check if any of the commands failed
-if [ $? -ne 0 ]; then
-    echo "Pre-commit checks failed. Commit aborted."
-    exit 1
-fi
+./mvnw validate || { echo "Validation failed. Commit aborted."; exit 1; }
+./mvnw clean test || { echo "Unit tests failed. Commit aborted."; exit 1; }
+./mvnw jacoco:report || { echo "Jacoco report generation failed. Commit aborted."; exit 1; }
+./mvnw clean verify || { echo "Verification failed. Commit aborted."; exit 1; }
 
 echo "Pre-commit checks passed."
+
