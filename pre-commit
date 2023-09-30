@@ -8,5 +8,6 @@ echo "Running pre-commit checks..."
 ./mvnw jacoco:report || { echo "Jacoco report generation failed. Commit aborted."; exit 1; }
 ./mvnw clean verify || { echo "Verification failed. Commit aborted."; exit 1; }
 
+
 echo "Pre-commit checks passed."
 
