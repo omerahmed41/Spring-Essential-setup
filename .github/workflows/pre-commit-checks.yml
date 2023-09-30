@@ -1,0 +1,27 @@
+name: Pre-commit Checks
+
+on: [push]
+
+jobs:
+  pre-commit-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17' # You can adjust the version if needed
+
+      - name: Run Pre-commit Checks
+        run: |
+          #!/bin/bash
+          
+          echo "Running pre-commit checks..."
+          ./mvnw validate || { echo "Validation failed. Commit aborted."; exit 1; }
+          ./mvnw clean test || { echo "Unit tests failed. Commit aborted."; exit 1; }
+          ./mvnw jacoco:report || { echo "Jacoco report generation failed. Commit aborted."; exit 1; }
+          ./mvnw clean verify || { echo "Verification failed. Commit aborted."; exit 1; }
+
