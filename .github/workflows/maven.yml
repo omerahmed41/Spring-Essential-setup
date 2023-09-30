@@ -54,11 +54,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: clean test
-        run: mvn clean test
+        run: mvn clean test -Dspring.profiles.active=test
       - name: jacoco:report
         run: mvn jacoco:report
       - name: clean verify
-        run: mvn clean verify
+        run: mvn clean verify -Dspring.profiles.active=test
   deploy:
 
     runs-on: ubuntu-latest

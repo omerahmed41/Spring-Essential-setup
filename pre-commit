@@ -3,10 +3,10 @@
 echo "Running pre-commit checks..."
 
 # Run your checks
-./mvnw validate || { echo "Validation failed. Commit aborted."; exit 1; }
-./mvnw clean test || { echo "Unit tests failed. Commit aborted."; exit 1; }
-./mvnw jacoco:report || { echo "Jacoco report generation failed. Commit aborted."; exit 1; }
-./mvnw clean verify || { echo "Verification failed. Commit aborted."; exit 1; }
+./mvnw validate -Dspring.profiles.active=test || { echo "Validation failed. Commit aborted."; exit 1; }
+./mvnw clean test -Dspring.profiles.active=test|| { echo "Unit tests failed. Commit aborted."; exit 1; }
+./mvnw jacoco:report -Dspring.profiles.active=test|| { echo "Jacoco report generation failed. Commit aborted."; exit 1; }
+./mvnw clean verify -Dspring.profiles.active=test || { echo "Verification failed. Commit aborted."; exit 1; }
 
 
 echo "Pre-commit checks passed."
